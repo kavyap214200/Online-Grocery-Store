@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            text-align: center;
+        }
+        .navbar {
+            background-color: #333;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+        }
+        .navbar a:hover {
+            background-color: #555;
+        }
+        .navbar div {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Slideshow Styling */
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            animation: fade 1s;
+        }
+        @keyframes fade {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+
+        .popular-categories {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .categories-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .category-box {
+            width: 120px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8f8f8;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: black;
+        }
+        .category-box img {
+            width: 100%;
+            height: auto;
+        }
+        .category-box p {
+            margin: 10px 0 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Our Grocery Store</h1>
+    
+    <div class="navbar">
+        <a href="homepage.html">Home</a>
+        <div>
+            <a href="product.html">Products</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="login.html" id="logout" style="background-color: red; padding: 10px; border-radius: 5px;">Logout</a>
+        </div>
+    </div>
+    
+    
+    <div class="slideshow-container">
+        <img class="slide" src="AD 1.png" alt="Slide 1">
+        <img class="slide" src="AD 2.png" alt="Slide 2">
+        <img class="slide" src="AD 3.png" alt="Slide 3">
+        <img class="slide" src="AD 4.jpg"alt="Slide 4">
+        <img class="slide" src="AD 5.jpg"alt="Slide 5">
+    </div>
+
+    <div class="popular-categories">
+        <h2>Popular Categories</h2>
+        <div class="categories-container">
+            <a href="product.html?category=fruits" class="category-box">
+                <img src="Fruits.jpg" alt="Fruits">
+                <p>Fruits</p>
+            </a>
+            <a href="product.html?category=vegetables" class="category-box">
+                <img src="Vegetables.jpg" alt="Vegetables">
+                <p>Vegetables</p>
+            </a>
+            <a href="product.html?category=packets" class="category-box">
+                <img src="packet2.jpg" alt="Packets">
+                <p>Packets</p>
+            </a>
+            <a href="product.html?category=biscuits" class="category-box">
+                <img src="biscuits2.jpg" alt="Biscuits">
+                <p>Biscuits</p>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Slideshow functionality
+        let slideIndex = 0;
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none"; // Hide all slides
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1; } // Reset index if out of bounds
+            slides[slideIndex - 1].style.display = "block"; // Show the next slide
+            setTimeout(showSlides, 3000); // Change slide every 3 seconds
+        }
+
+        // Start slideshow
+        document.addEventListener("DOMContentLoaded", showSlides);
+    </script>
+</body>
+</html>

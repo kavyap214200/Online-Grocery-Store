@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <style>
+        body {
+            background-color: #181818;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .category-buttons button {
+            background-color: #3a3a3a;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .product-container {
+            background-color: #2a2a2a;
+            padding: 10px;
+            border-radius: 10px;
+            width: 200px;
+            height: auto;
+            display: none;
+            vertical-align: top;
+            margin: 10px auto;
+        }
+        .cart-container {
+            background-color: #2a2a2a;
+            padding: 10px;
+            border-radius: 10px;
+            width: 50%;
+            margin: 20px auto;
+        }
+        .product-container button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 5px;
+            margin: 3px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .proceed-button {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function showCategory(category) {
+            let allProducts = document.querySelectorAll(".product-container");
+            allProducts.forEach(product => product.style.display = "none");
+            document.getElementById(category).style.display = "inline-block";
+        }
+
+        let cart = [];
+        function addToCart(item, price) {
+            cart.push({ item, price });
+            updateCart();
+        }
+        function updateCart() {
+            let cartContainer = document.getElementById("cart-items");
+            cartContainer.innerHTML = "";
+            let total = 0;
+
+            cart.forEach(product => {
+                total += product.price;
+                let p = document.createElement("p");
+                p.innerText = `${product.item} - Price: ₹${product.price}`;
+                cartContainer.appendChild(p);
+            });
+
+            document.getElementById("total-price").innerText = `Total: ₹${total}`;
+        }
+        function proceedToPayment() {
+            if (cart.length === 0) {
+                alert("Your cart is empty! Please add some products.");
+                return;
+            }
+            window.location.href = "payment.html";
+        }
+    </script>
+</head>
+<body>
+    <div class="category-buttons">
+        <button onclick="showCategory('fruits')">Fruits</button>
+        <button onclick="showCategory('vegetables')">Vegetables</button>
+        <button onclick="showCategory('packets')">Packets</button>
+        <button onclick="showCategory('biscuits')">Biscuits</button>
+    </div>
+
+    <div class="product-container" id="fruits">
+        <h2>Fruits</h2>
+        <button onclick="addToCart('Orange', 40)">Orange - ₹40/kg</button><br>
+        <button onclick="addToCart('Apple', 70)">Apple - ₹70/kg</button><br>
+        <button onclick="addToCart('Grapes', 50)">Grapes - ₹50/kg</button><br>
+        <button onclick="addToCart('PineApple', 60)">PineApple - ₹60/kg</button><br>
+    </div>
+
+    <div class="product-container" id="vegetables">
+        <h2>Vegetables</h2>
+        <button onclick="addToCart('Carrot', 40)">Carrot - ₹40/kg</button><br>
+        <button onclick="addToCart('Tomato', 30)">Tomato - ₹30/kg</button><br>
+        <button onclick="addToCart('Potato', 25)">Potato - ₹25/kg</button><br>
+        <button onclick="addToCart('Cabbage', 35)">Cabbage - ₹35/kg</button><br>
+    </div>
+
+    <div class="product-container" id="packets">
+        <h2>Packets</h2>
+        <button onclick="addToCart('Balaji Crunchem', 40)">Balaji Crunchem - ₹40</button><br>
+        <button onclick="addToCart('Balaji Crunchex', 70)">Balaji Crunchex - ₹70</button><br>
+        <button onclick="addToCart('Chataka Pataka', 10)">Chataka Pataka - ₹10</button><br>
+    </div>
+
+    <div class="product-container" id="biscuits">
+        <h2>Biscuits</h2>
+        <button onclick="addToCart('Good Day', 20)">Good Day - ₹20</button><br>
+        <button onclick="addToCart('20 20', 30)">20 20 - ₹30</button><br>
+        <button onclick="addToCart('Monaco', 25)">Monaco - ₹25</button><br>
+        <button onclick="addToCart('Parle G', 30)">Parle G - ₹30</button><br>
+        <button onclick="addToCart('Dark Fantasy', 10)">Dark Fantasy - ₹10</button><br>
+    </div>
+
+    <div class="cart-container">
+        <h2>Shopping Cart</h2>
+        <div id="cart-items"></div>
+        <h3 id="total-price">Total: ₹0</h3>
+        <button class="proceed-button" onclick="proceedToPayment()">Proceed to Payment</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .payment-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .payment-option {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .payment-option img {
+            width: 60px;
+            height: auto;
+        }
+
+        .payment-option:hover {
+            transform: scale(1.1);
+        }
+
+        .payment-details {
+            display: none;
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Complete Your Payment</h1>
+        <div class="payment-options">
+            <div class="payment-option" onclick="showDetails('credit-card')">
+                <img src="visa.png" alt="Credit Card">
+                <p>Credit Card</p>
+            </div>
+            <div class="payment-option" onclick="showDetails('upi')">
+                <img src="BHIM UPi.png" alt="UPI">
+                <p>UPI</p>
+            </div>
+            <div class="payment-option" onclick="placeOrder()">
+                <img src="cash-on-delivery_3585178.png" alt="Cash On Delivery">
+                <p>Cash On Delivery</p>
+            </div>
+        </div>
+
+        <div id="credit-card" class="payment-details">
+            <h3>Enter Credit Card Details</h3>
+            <input type="text" id="cardholder" placeholder="Cardholder Name" required>
+            <input type="text" id="cardNumber" placeholder="Card Number" maxlength="19" oninput="formatCardNumber(this)" required>
+            <div style="display: flex; gap: 10px;">
+                <select id="expiryMonth">
+                    <option value="">Month</option>
+                    <script>
+                        for (let i = 1; i <= 12; i++) {
+                            document.write(`<option value="${i.toString().padStart(2, '0')}">${i.toString().padStart(2, '0')}</option>`);
+                        }
+                    </script>
+                </select>
+                <select id="expiryYear">
+                    <option value="">Year</option>
+                    <script>
+                        let year = new Date().getFullYear();
+                        for (let i = 0; i < 12; i++) {
+                            document.write(`<option value="${year + i}">${year + i}</option>`);
+                        }
+                    </script>
+                </select>
+            </div>
+            <input type="password" id="cvv" placeholder="CVV" maxlength="3" required>
+            <button class="button" onclick="validatePayment()">Pay Now</button>
+        </div>
+
+        <div id="upi" class="payment-details">
+            <h3>Scan & Pay via UPI</h3>
+            <img src="QR.jpg" alt="UPI QR Code" width="200">
+            <p>Scan the QR code with your UPI app to complete the payment.</p>
+        </div>
+    </div>
+
+    <script>
+        function showDetails(paymentMethod) {
+            document.getElementById('credit-card').style.display = 'none';
+            document.getElementById('upi').style.display = 'none';
+
+            if (paymentMethod) {
+                document.getElementById(paymentMethod).style.display = 'block';
+            }
+        }
+
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\D/g, ''); // Remove non-numeric characters
+            value = value.replace(/(\d{4})/g, '$1 ').trim(); // Add space after every 4 digits
+            input.value = value;
+        }
+
+        function validatePayment() {
+            let cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+            let expiryMonth = document.getElementById('expiryMonth').value;
+            let expiryYear = document.getElementById('expiryYear').value;
+            let cvv = document.getElementById('cvv').value;
+
+            if (cardNumber.length !== 16 || isNaN(cardNumber)) {
+                alert("Please enter a valid 16-digit card number.");
+                return;
+            }
+
+            if (expiryMonth === "" || expiryYear === "") {
+                alert("Please select a valid expiry date.");
+                return;
+            }
+
+            if (cvv.length !== 3 || isNaN(cvv)) {
+                alert("Please enter a valid 3-digit CVV.");
+                return;
+            }
+
+            alert('Payment Successful!');
+        }
+
+        function placeOrder() {
+            alert('Your Order is Placed.');
+        }
+    </script>
+</body>
+</html>
